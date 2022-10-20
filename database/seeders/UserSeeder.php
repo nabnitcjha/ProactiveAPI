@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
          $user->first_name = 'super';
          $user->last_name = 'admin';
          $user->email = 'admin@proactive.com';
+         $user->role = 'admin';
          $user->user_status = 1;
          $user->password = bcrypt('proactive@admin123');
          $user->created_at = Carbon::now()->format('Y-m-d H:i:s');
