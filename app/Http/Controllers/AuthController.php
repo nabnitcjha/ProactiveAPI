@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\UserResource;
 use PhpParser\Node\Expr\New_;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class AuthController extends Controller
 {
@@ -47,8 +49,10 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json($this->userResource->make($this->guard()->user()));
-
+        return $this->successResponse(
+            $this->userResource->make($this->guard()->user()),
+            'fetch all record successfully'
+        );
         // return response()->json($this->guard()->user());
     }
 
