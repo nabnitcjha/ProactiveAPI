@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\UserResource;
+use PhpParser\Node\Expr\New_;
 
 class AuthController extends Controller
 {
@@ -13,8 +15,10 @@ class AuthController extends Controller
      *
      * @return void
      */
+    private $userResource;
     public function __construct()
     {
+        $this->userResource = new UserResource(array());
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
@@ -43,7 +47,9 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json($this->guard()->user());
+        return response()->json($this->userResource->make($this->guard()->user()));
+
+        // return response()->json($this->guard()->user());
     }
 
     /**
