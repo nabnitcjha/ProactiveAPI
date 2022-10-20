@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -23,5 +24,8 @@ class UserSeeder extends Seeder
          $user->created_at = Carbon::now()->format('Y-m-d H:i:s');
          $user->updated_at = Carbon::now()->format('Y-m-d H:i:s');
          $user->save();
+         $user->assignRole('admin');
+         $role = Role::findByName('admin');
+         $role->givePermissionTo(['create','read','update','delete']);
     }
 }
