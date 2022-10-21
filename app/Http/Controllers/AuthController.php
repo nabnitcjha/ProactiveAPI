@@ -18,6 +18,8 @@ class AuthController extends Controller
      * @return void
      */
     private $userResource;
+    private $token;
+    private $user;
     public function __construct()
     {
         $this->userResource = new UserResource(array());
@@ -36,7 +38,26 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if ($token = $this->guard()->attempt($credentials)) {
-            return $this->respondWithToken($token);
+            $user = $this->guard()->user();
+            $user_info = array(  
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $this->guard()->factory()->getTTL() * 60,
+            'user_id' => $user->id,
+            'name' => $user->first_name.' ' . $user->last_name,
+            'email' => $user->email,
+            'active_status' => $user->user_status,
+            "role" => $user->getRoleNames(),
+            "permissions" => $user->getPermissionsViaRoles()->pluck('name'),
+            "created_at" => $user->created_at->format("M d, Y H:i A"),
+             );
+            
+            return $this->successResponse(
+                $user_info,
+                'login successfully'
+            );
+
+            // return $this->respondWithToken($token);
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);

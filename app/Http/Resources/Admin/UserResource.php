@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             "role" => $this->getRoleNames(),
             "permissions" => $this->getPermissionsViaRoles()->pluck('name'),
             "active_status" => (bool) $this->user_status,
+            "token" => $this->token,
             "created_at" => $this->created_at->format("M d, Y H:i A"),
             "updated_at" => $this->updated_at->format("M d, Y H:i A")
         ];
