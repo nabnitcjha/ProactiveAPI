@@ -16,7 +16,6 @@ class LoginResource extends JsonResource
     {
         return [
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60,
             "id" => $this->id,
             "name" => $this->first_name . ' ' .$this->last_name,
             "email" => $this->email,

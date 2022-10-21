@@ -38,9 +38,16 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if ($token = $this->guard()->attempt($credentials)) {
+        if ($access_token = $this->guard()->attempt($credentials)) {
             $user = $this->loginResource->make($this->guard()->user());
-            return response()->json(compact('token', 'user'));
+            $token_type = 'bearer';
+            $expires_in = $this->guard()->factory()->getTTL() * 60;
+            
+            return $this->successResponse(
+                compact('access_token','token_type','expires_in','user'),
+                'login successfully'
+            );
+            return $this->respondWithToken($access_token);
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
