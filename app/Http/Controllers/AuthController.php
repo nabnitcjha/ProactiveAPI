@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\LoginResource;
 use App\Http\Resources\Admin\UserResource;
 use PhpParser\Node\Expr\New_;
 use Symfony\Component\HttpFoundation\Response;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -18,11 +19,11 @@ class AuthController extends Controller
      * @return void
      */
     private $userResource;
-    private $token;
-    private $user;
+    private $loginResource;
     public function __construct()
     {
         $this->userResource = new UserResource(array());
+        $this->loginResource = new LoginResource(array());
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
@@ -38,26 +39,8 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if ($token = $this->guard()->attempt($credentials)) {
-            $user = $this->guard()->user();
-            $user_info = array(  
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60,
-            'user_id' => $user->id,
-            'name' => $user->first_name.' ' . $user->last_name,
-            'email' => $user->email,
-            'active_status' => $user->user_status,
-            "role" => $user->getRoleNames(),
-            "permissions" => $user->getPermissionsViaRoles()->pluck('name'),
-            "created_at" => $user->created_at->format("M d, Y H:i A"),
-             );
-            
-            return $this->successResponse(
-                $user_info,
-                'login successfully'
-            );
-
-            // return $this->respondWithToken($token);
+            $user = $this->loginResource->make($this->guard()->user());
+            return response()->json(compact('token', 'user'));
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
