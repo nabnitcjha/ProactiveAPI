@@ -42,12 +42,10 @@ class AuthController extends Controller
             $user = $this->loginResource->make($this->guard()->user());
             $token_type = 'bearer';
             $expires_in = $this->guard()->factory()->getTTL() * 60;
+            $message = 'login successfully';
             
-            return $this->successResponse(
-                compact('access_token','token_type','expires_in','user'),
-                'login successfully'
-            );
-            return $this->respondWithToken($access_token);
+            return response()->json(compact('access_token','token_type','expires_in','user','message'));
+            // return $this->respondWithToken($access_token);
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
