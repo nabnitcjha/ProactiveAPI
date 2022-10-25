@@ -28,13 +28,11 @@ class BaseController extends Controller
     
     public function index($request)
     {
-        if ($request->allowPagination!=null) {
-            if(str_contains($request->allowPagination, 'false')){
-                $data = $this->Query->get();
-            }
+        if(str_contains($request->allowPagination, 'true')){
+            $data = $this->Query->paginate(5); 
         }
         else{
-            $data = $this->Query->paginate(5); 
+            $data = $this->Query->get();
         }
         
         $this->showAll($data);
