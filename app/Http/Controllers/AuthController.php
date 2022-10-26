@@ -27,13 +27,6 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-    /**
-     * Get a JWT token via given credentials.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -43,33 +36,21 @@ class AuthController extends Controller
             $token_type = 'bearer';
             $expires_in = $this->guard()->factory()->getTTL() * 60;
             $message = 'login successfully';
-            
-            return response()->json(compact('access_token','token_type','expires_in','user','message'));
-            // return $this->respondWithToken($access_token);
+
+            return response()->json(compact('access_token', 'token_type', 'expires_in', 'user', 'message'));
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
     }
 
-    /**
-     * Get the authenticated User
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function me()
     {
         return $this->successResponse(
             $this->userResource->make($this->guard()->user()),
             'fetch all record successfully'
         );
-        // return response()->json($this->guard()->user());
     }
 
-    /**
-     * Log the user out (Invalidate the token)
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function logout()
     {
         $this->guard()->logout();
@@ -77,23 +58,11 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function refresh()
     {
         return $this->respondWithToken($this->guard()->refresh());
     }
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     protected function respondWithToken($token)
     {
         return response()->json([
@@ -103,11 +72,6 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\Guard
-     */
     public function guard()
     {
         return Auth::guard();
