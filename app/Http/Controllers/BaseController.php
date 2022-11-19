@@ -28,6 +28,8 @@ class BaseController extends Controller
     
     public function index($request)
     {
+        // home?category=Cars&make=Tesla
+        // request('category')
         if(str_contains($request->allowPagination, 'true')){
             $data = $this->Query->paginate(5); 
         }
@@ -45,6 +47,9 @@ class BaseController extends Controller
     
     public function store(Request $request)
     {
+        // $params["deleted_at"] = date('Y-m-d H:i:s');
+        // $request->request->add(['params' => $params]); 
+
         $params = $request->input();
         
         $Model = $this->getModel();
@@ -69,7 +74,7 @@ class BaseController extends Controller
     
     public function update(Request $request, $id)
     {
-        $params = $request->input("params");
+        $params = $request->input();
         
         $Model = $this->getModel();
         $Model = $Model::find($id);
