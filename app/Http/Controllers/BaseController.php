@@ -8,6 +8,7 @@ class BaseController extends Controller
 {
     //
     public $model_name;
+    public $resource_name;
     public $Model;
     
     public function __construct() {
@@ -15,6 +16,7 @@ class BaseController extends Controller
             throw new \Exception('An unexpected error occurred. Please contact customer support.');
         }
         $this->Model = new $this->model_name;
+        $this->resource = new $this->resource_name;
         $this->Query = $this->Model::select("*");
     }
     
