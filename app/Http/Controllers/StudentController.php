@@ -14,9 +14,33 @@ class StudentController extends BaseController
 
     public function saveData(Request $request)
     {
-        // $student_info = $request('student_info');
-        // return $request;
-        return parent::store($request->student_info);
+        // Insert into user table
+        $model_name = "App\Models\User";
+        $user = parent::store($request->user_info);
+
+        // Insert into student table
+        $model_name = "App\Models\Student";
+        $student_info["user_id"] = $user->id;
+        $request->request->add(['student_info' => $student_info]); 
+        $student = parent::store($request->student_info);
+
+        // Insert into parent table
+        foreach ($request->parent_info_info as $key => $value) {
+            $model_name = "App\Models\User";
+            $user_info["first_name"] = $value->first_name;
+            $user_info["last_name"] = $value->last_name;
+            $user_info["email"] = $value->email;
+            $user_info["role"] = $value->role;
+            $user = parent::store($user_info);
+
+            $model_name = "App\Models\Parent";
+            $parent_info["full_name"] = $value->full_name;
+            $parent_info["phone"] = $value->phone;
+            $parent_info["user_id"] = $user->user_id;
+            $parent = parent::store($parent_info);
+        }
+
+        $this->successResponse($user,'save successfully');
     }
 
     public function show($id)

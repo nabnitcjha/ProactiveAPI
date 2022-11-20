@@ -17,7 +17,6 @@ class CreateTeacherTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('full_name')->nullable();
-            $table->string('email')->unique();
             $table->string('country')->nullable();
             $table->datetime('dob')->nullable();
             $table->string('address')->nullable();
@@ -25,7 +24,6 @@ class CreateTeacherTable extends Migration
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->string('phone')->nullable();
-            $table->integer('user_image')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

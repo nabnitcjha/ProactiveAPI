@@ -62,7 +62,7 @@ class BaseController extends Controller
             return $this->getError("faild to save");
         }
 
-        $this->successResponse($Model,'save successfully');
+        return $Model;
     }
     
     public function show($id)
