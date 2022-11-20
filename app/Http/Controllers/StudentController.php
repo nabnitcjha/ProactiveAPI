@@ -20,23 +20,27 @@ class StudentController extends BaseController
 
         // Insert into student table
         parent::createModelObject("App\Models\Student");
-        $student_info["user_id"] = $user->id;
-        $request->request->add(['student_info' => $student_info]); 
-        $student = parent::store($request->student_info);
+         $student_info['phone'] = $request->student_info['phone'];
+         $student_info['dob'] = $request->student_info['dob'];
+         $student_info['full_name'] = $request->student_info['full_name'];
+         $student_info['country'] = $request->student_info['country'];
+         $student_info['user_id'] = $user->id;
+        $student = parent::store($student_info);
 
         // Insert into parent table
-        foreach ($request->parent_info_info as $key => $value) {
+        $parent_info = json_decode($request->parent_info, true);
+        foreach ($parent_info as $key => $value) {
             parent::createModelObject("App\Models\User");
-            $user_info["first_name"] = $value->first_name;
-            $user_info["last_name"] = $value->last_name;
-            $user_info["email"] = $value->email;
-            $user_info["role"] = $value->role;
+            $user_info["first_name"] = $value['first_name'];
+            $user_info["last_name"] = $value['last_name'];
+            $user_info["email"] = $value['email'];
+            $user_info["role"] = $value['role'];
             $user = parent::store($user_info);
 
-            parent::createModelObject("App\Models\Parent");
-            $parent_info["full_name"] = $value->full_name;
-            $parent_info["phone"] = $value->phone;
-            $parent_info["user_id"] = $user->user_id;
+            parent::createModelObject("App\Models\Guardian");
+            $parent_info["full_name"] = $value['full_name'];
+            $parent_info["phone"] = $value['phone'];
+            $parent_info["user_id"] = $user['user_id'];
             $parent = parent::store($parent_info);
         }
 
