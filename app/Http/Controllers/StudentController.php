@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     public $model_name = "App\Models\Student";
-    public function index($request)
+    public function index($allowPagination)
     {
-        return parent::index($request);
+        return parent::index($allowPagination);
     }
 
     public function store(Request $request)

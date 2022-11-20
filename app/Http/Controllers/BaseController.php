@@ -28,11 +28,11 @@ class BaseController extends Controller
         return $this->Model;
     }
     
-    public function index($request)
+    public function index($allowPagination)
     {
         // home?category=Cars&make=Tesla
         // request('category')
-        if(str_contains($request->allowPagination, 'true')){
+        if(str_contains($allowPagination, 'true')){
             $data = $this->Query->paginate(5); 
         }
         else{

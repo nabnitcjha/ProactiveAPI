@@ -23,3 +23,16 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+
+// student routes
+Route::group([
+
+    'middleware' => 'api',
+    'namespace' => 'App\Http\Controllers'
+
+], function ($router) {
+
+    Route::post('addStudent', 'StudentController@store');
+    Route::get('getStudents/{allowPagination}', 'StudentController@index');
+    
+});
