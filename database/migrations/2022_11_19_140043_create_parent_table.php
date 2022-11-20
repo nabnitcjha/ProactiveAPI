@@ -13,7 +13,7 @@ class CreateParentTable extends Migration
      */
     public function up()
     {
-        Schema::create('parents', function (Blueprint $table) {
+        Schema::create('guardians', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('full_name')->nullable();
@@ -36,6 +36,6 @@ class CreateParentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parents');
+        Schema::dropIfExists('guardians');
     }
 }

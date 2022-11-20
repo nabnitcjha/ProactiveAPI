@@ -13,12 +13,12 @@ class CreateParentStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('parent_students', function (Blueprint $table) {
+        Schema::create('guardian_students', function (Blueprint $table) {
             $table->integer('student_id')->unsigned();
-            $table->integer('parent_id')->unsigned();
+            $table->integer('guardian_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('parent_id')->references('id')->on('parents')->onDelete('cascade');
+            $table->foreign('guardian_id')->references('id')->on('guardians')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
         });
     }
@@ -30,6 +30,6 @@ class CreateParentStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parent_students');
+        Schema::dropIfExists('guardian_students');
     }
 }

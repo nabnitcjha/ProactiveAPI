@@ -38,10 +38,10 @@ class StudentController extends BaseController
             $user = parent::store($user_info);
 
             parent::createModelObject("App\Models\Guardian");
-            $parent_info["full_name"] = $value['full_name'];
-            $parent_info["phone"] = $value['phone'];
-            $parent_info["user_id"] = $user['user_id'];
-            $parent = parent::store($parent_info);
+            $prt_info["full_name"] = $value['full_name'];
+            $prt_info["phone"] = $value['phone'];
+            $prt_info["user_id"] = $user->id;
+            $parent = parent::store($prt_info);
         }
 
         $this->successResponse($user,'save successfully');
