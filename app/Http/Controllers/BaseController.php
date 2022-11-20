@@ -27,6 +27,10 @@ class BaseController extends Controller
     public function getModel() {
         return $this->Model;
     }
+
+    public function createModelObject($model) {
+        $this->Model = new $model;
+    }
     
     public function index($allowPagination)
     {
