@@ -22,7 +22,6 @@ class StudentController extends BaseController
         parent::createModelObject("App\Models\Student");
         $student_info["user_id"] = $user->id;
         $request->request->add(['student_info' => $student_info]); 
-        return $request;
         $student = parent::store($request->student_info);
 
         // Insert into parent table
