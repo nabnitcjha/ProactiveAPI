@@ -32,7 +32,7 @@ Route::group([
 
 ], function ($router) {
 
-    Route::post('addStudent', 'StudentController@store');
+    Route::post('addStudent', 'StudentController@saveData');
     Route::get('getStudents/{allowPagination}', 'StudentController@index');
-    
+
 });

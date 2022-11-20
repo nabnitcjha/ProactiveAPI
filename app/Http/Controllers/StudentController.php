@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class StudentController extends BaseController
 {
     public $model_name = "App\Models\Student";
     public function index($allowPagination)
@@ -12,9 +12,11 @@ class StudentController extends Controller
         return parent::index($allowPagination);
     }
 
-    public function store(Request $request)
+    public function saveData(Request $request)
     {
-        return parent::store($request);
+        // $student_info = $request('student_info');
+        // return $request;
+        return parent::store($request->student_info);
     }
 
     public function show($id)

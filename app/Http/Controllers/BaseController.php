@@ -16,7 +16,7 @@ class BaseController extends Controller
             throw new \Exception('An unexpected error occurred. Please contact customer support.');
         }
         $this->Model = new $this->model_name;
-        $this->resource = new $this->resource_name;
+        // $this->resource = new $this->resource_name;
         $this->Query = $this->Model::select("*");
     }
     
@@ -47,12 +47,12 @@ class BaseController extends Controller
         //
     }
     
-    public function store(Request $request)
+    public function store($request)
     {
         // $params["deleted_at"] = date('Y-m-d H:i:s');
         // $request->request->add(['params' => $params]); 
 
-        $params = $request->input();
+        $params = $request;
         
         $Model = $this->getModel();
         foreach ($params as $key => $value) {
