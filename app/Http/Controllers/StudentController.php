@@ -42,9 +42,14 @@ class StudentController extends BaseController
             $prt_info["phone"] = $value['phone'];
             $prt_info["user_id"] = $user->id;
             $parent = parent::store($prt_info);
+
+            parent::createModelObject("App\Models\Guardian_Student");
+            $grd_std_info["guardian_id"] = $parent->id;
+            $grd_std_info["student_id"] = $student->id;
+            $guardian_student = parent::store($grd_std_info);
         }
 
-        $this->successResponse($user,'save successfully');
+        $this->successResponse($student,'save successfully');
     }
 
     public function show($id)
