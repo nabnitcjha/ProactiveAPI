@@ -36,3 +36,16 @@ Route::group([
     Route::get('getStudents/{allowPagination}', 'StudentController@index');
 
 });
+
+// teacher routes
+Route::group([
+
+    'middleware' => 'api',
+    'namespace' => 'App\Http\Controllers'
+
+], function ($router) {
+
+    Route::post('addTeacher', 'TeacherController@saveData');
+    Route::get('getTeachers/{allowPagination}', 'TeacherController@index');
+
+});

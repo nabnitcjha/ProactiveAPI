@@ -20,11 +20,11 @@ class StudentController extends BaseController
 
         // Insert into student table
         parent::createModelObject("App\Models\Student");
-         $student_info['phone'] = $request->student_info['phone'];
-         $student_info['dob'] = $request->student_info['dob'];
-         $student_info['full_name'] = $request->student_info['full_name'];
-         $student_info['country'] = $request->student_info['country'];
-         $student_info['user_id'] = $user->id;
+        $student_info['phone'] = $request->student_info['phone'];
+        $student_info['dob'] = $request->student_info['dob'];
+        $student_info['full_name'] = $request->student_info['full_name'];
+        $student_info['country'] = $request->student_info['country'];
+        $student_info['user_id'] = $user->id;
         $student = parent::store($student_info);
 
         // Insert into parent table
@@ -49,7 +49,7 @@ class StudentController extends BaseController
             $guardian_student = parent::store($grd_std_info);
         }
 
-        $this->successResponse($student,'save successfully');
+        $this->successResponse($student, 'save successfully');
     }
 
     public function show($id)
@@ -59,7 +59,7 @@ class StudentController extends BaseController
 
     public function update(Request $request, $id)
     {
-        return parent::update($request,$id);
+        return parent::update($request, $id);
     }
 
     public function destroy($id)
