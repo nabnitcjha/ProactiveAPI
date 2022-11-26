@@ -49,3 +49,16 @@ Route::group([
     Route::get('getTeachers/{allowPagination}', 'TeacherController@index');
 
 });
+
+// subject routes
+Route::group([
+
+    'middleware' => 'api',
+    'namespace' => 'App\Http\Controllers'
+
+], function ($router) {
+
+    Route::post('addSubject', 'SubjectController@saveData');
+    Route::get('getSubjects/{allowPagination}', 'SubjectController@index');
+
+});

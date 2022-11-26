@@ -15,7 +15,7 @@ class SubjectController extends BaseController
 
     public function saveData(Request $request)
     {
-        return parent::store($request);
+        return parent::store($request->subject_info);
     }
 
     public function show($id)
