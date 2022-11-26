@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TeacherController extends Controller
+class TeacherController extends BaseController
 {
     public $model_name = "App\Models\Teacher";
 

@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SubjectController extends Controller
+class SubjectController extends BaseController
 {
     public $model_name = "App\Models\Subject";
 
-    public function index($request)
+    public function index($allowPagination)
     {
-        return parent::index($request);
+        return parent::index($allowPagination);
     }
 
-    public function store(Request $request)
+    public function saveData(Request $request)
     {
         return parent::store($request);
     }
