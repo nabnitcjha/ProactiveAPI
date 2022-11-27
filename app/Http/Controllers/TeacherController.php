@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TeacherResource;
 use Illuminate\Http\Request;
 
 class TeacherController extends BaseController
 {
     public $model_name = "App\Models\Teacher";
+    public $teacherResource;
+
+    public function __construct()
+    {
+        $this->teacherResource = new TeacherResource(array());
+    }
 
     public function index($allowPagination)
     {

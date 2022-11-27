@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class ParentController extends Controller
 {
     public $model_name = "App\Models\Parent";
+    
 
     public function index($request)
     {

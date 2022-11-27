@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class BaseController extends Controller
 {
@@ -16,7 +17,7 @@ class BaseController extends Controller
             throw new \Exception('An unexpected error occurred. Please contact customer support.');
         }
         $this->Model = new $this->model_name;
-        // $this->resource = new $this->resource_name;
+        $this->resource = new $this->resource_name(array());
         $this->Query = $this->Model::select("*");
     }
     

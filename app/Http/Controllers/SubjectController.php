@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SubjectResource;
 use Illuminate\Http\Request;
 
 class SubjectController extends BaseController
 {
     public $model_name = "App\Models\Subject";
+    public $subjectResource;
+
+    public function __construct()
+    {
+        $this->subjectResource = new SubjectResource(array());
+    }
 
     public function index($allowPagination)
     {
