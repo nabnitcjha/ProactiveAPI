@@ -8,24 +8,12 @@ use Illuminate\Support\Arr;
 class BaseController extends Controller
 {
     //
-    public $model_name;
-    public $resource_name;
-    public $Model;
-    
-    public function __construct() {
-        if (!class_exists($this->model_name)) {
-            throw new \Exception('An unexpected error occurred. Please contact customer support.');
-        }
-        $this->Model = new $this->model_name;
-        $this->resource = new $this->resource_name(array());
-        $this->Query = $this->Model::select("*");
-    }
-    
     public function getError($message) {
         $this->errorResponse($message);
     }
     
     public function getModel() {
+        // $this->Query = $this->Model::select("*");
         return $this->Model;
     }
 
@@ -38,10 +26,10 @@ class BaseController extends Controller
         // home?category=Cars&make=Tesla
         // request('category')
         if(str_contains($allowPagination, 'true')){
-            $data = $this->Query->paginate(5); 
+            $data = $this->Model::paginate(5); 
         }
         else{
-            $data = $this->Query->get();
+            $data = $this->Model::get();
         }
         
         $this->showAll($data);

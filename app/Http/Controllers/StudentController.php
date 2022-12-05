@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\StudentResource;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends BaseController
 {
-    public $model_name = "App\Models\Student";
-    public $studentResource;
-
     public function __construct()
     {
         $this->studentResource = new StudentResource(array());
+        $this->Model = new Student();
     }
 
     public function index($allowPagination)

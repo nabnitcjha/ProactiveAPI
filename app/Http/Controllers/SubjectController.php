@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SubjectResource;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class SubjectController extends BaseController
 {
-    public $model_name = "App\Models\Subject";
-    public $subjectResource;
-
     public function __construct()
     {
-        $this->subjectResource = new SubjectResource(array());
+        $this->resource_name = new SubjectResource(array());
+        $this->Model = new Subject();
     }
 
     public function index($allowPagination)
@@ -22,7 +21,15 @@ class SubjectController extends BaseController
 
     public function saveData(Request $request)
     {
-        return parent::store($request->subject_info);
+        // return $request->subject_info['name'];
+        $subject_info['name'] = $request->subject_info['name'];
+        $subject = parent::store($subject_info);
+
+        // $subject = new Subject();
+        // $subject->name = $request->subject_info['name'];
+        // $subject->save();
+
+        $this->successResponse($subject, 'save successfully');
     }
 
     public function show($id)
