@@ -62,3 +62,16 @@ Route::group([
     Route::get('getSubjects/{allowPagination}', 'SubjectController@index');
 
 });
+
+// class-schedule routes
+Route::group([
+
+    'middleware' => 'api',
+    'namespace' => 'App\Http\Controllers'
+
+], function ($router) {
+
+    Route::post('addTimetable', 'ClassScheduleController@saveData');
+    Route::get('getTimetables/{allowPagination}', 'ClassScheduleController@index');
+
+});
