@@ -11,7 +11,6 @@ trait ApiResponser
 {
 	protected function successResponse($data, $message,$code=Response::HTTP_OK)
 	{
-		return $data;
 		return response()->json(
 			['data' => $data, 'message' => $message,'status_code'=>$code]
 			, $code);

@@ -25,14 +25,15 @@ class BaseController extends Controller
     {
         // home?category=Cars&make=Tesla
         // request('category')
+        $data='';
         if(str_contains($allowPagination, 'true')){
             $data = $this->Model::paginate(5); 
         }
         else{
             $data = $this->Model::get();
         }
-        
-        $this->showAll($data);
+        return $this->successResponse($data,'fetch record successfully');
+        // return  $this->showAll($data);
     }
     
     public function create()
