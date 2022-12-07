@@ -29,30 +29,22 @@ class ClassScheduleController extends BaseController
 
         $class_schedule_info['topic']=$request->class_schedule_info['topic'];
         $class_schedule_info['teacher_id']=$request->class_schedule_info['teacher_id'];
-        $class_schedule_info['subject_id ']=$request->class_schedule_info['subject_id'];
+        $class_schedule_info['subject_id']=$request->class_schedule_info['subject_id'];
         $class_schedule_info['description']=$request->class_schedule_info['event_message'];
         $class_schedule_info['selected_day']=$request->class_schedule_info['selected_day'];
         $class_schedule_info['class_repeat']=$request->class_schedule_info['session_repeat'];
         $class_schedule_info['class_unique_id']=$session_id;
 
         foreach ($slotTimes as $key => $slotTime) {
-            $class_schedule_info['start_date']=$request->class_schedule_info['topic'];
-            $class_schedule_info['end_date']=$request->class_schedule_info['teacher_id'];
+            $class_schedule_info['start_date']=$slotTime['startDate'];
+            $class_schedule_info['end_date']=$slotTime['endDate'];
+            $teacher = parent::store($class_schedule_info);
+            parent::createModelObject("App\Models\ClassSchedule");
         }
         // Insert into user table
-        parent::createModelObject("App\Models\User");
-        $user = parent::store($request->user_info);
-
-        // Insert into teacher table
-        parent::createModelObject("App\Models\Teacher");
-        $teacher_info['phone'] = $request->teacher_info['phone'];
-        $teacher_info['dob'] = $request->teacher_info['dob'];
-        $teacher_info['full_name'] = $request->teacher_info['full_name'];
-        $teacher_info['country'] = $request->teacher_info['country'];
-        $teacher_info['user_id'] = $user->id;
-        $teacher = parent::store($teacher_info);
-
-        $this->successResponse($teacher, 'save successfully');
+        // parent::createModelObject("App\Models\User");
+        // $user = parent::store($request->user_info);
+        // $this->successResponse($teacher, 'save successfully');
     }
 
     public function show($id)
