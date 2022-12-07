@@ -38,7 +38,7 @@ class ClassScheduleController extends BaseController
             ];
 
             $arrayTemp = (array)array_merge($request->class_schedule_info, $class_schedule_info);
-            
+
             $teacher = parent::store($arrayTemp);
             parent::createModelObject("App\Models\ClassSchedule");
         }
