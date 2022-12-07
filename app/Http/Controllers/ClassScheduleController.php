@@ -23,22 +23,23 @@ class ClassScheduleController extends BaseController
 
     public function saveData(Request $request)
     {
-        $slotTimes = json_decode($request->class_schedule_info['slotTimes'], true);
-        $students = json_decode($request->class_schedule_info['students'], true);
+        $arrayTemp = array();
+
+        $slotTimes = json_decode($request->class_slot_info['slotTimes'], true);
+        $students = json_decode($request->class_student_info['students'], true);
         $session_id = Str::random($length = 10);
 
-        $class_schedule_info['topic']=$request->class_schedule_info['topic'];
-        $class_schedule_info['teacher_id']=$request->class_schedule_info['teacher_id'];
-        $class_schedule_info['subject_id']=$request->class_schedule_info['subject_id'];
-        $class_schedule_info['description']=$request->class_schedule_info['event_message'];
-        $class_schedule_info['selected_day']=$request->class_schedule_info['selected_day'];
-        $class_schedule_info['class_repeat']=$request->class_schedule_info['session_repeat'];
-        $class_schedule_info['class_unique_id']=$session_id;
-
         foreach ($slotTimes as $key => $slotTime) {
-            $class_schedule_info['start_date']=$slotTime['startDate'];
-            $class_schedule_info['end_date']=$slotTime['endDate'];
-            $teacher = parent::store($class_schedule_info);
+
+            $class_schedule_info = [
+                'start_date'=>$slotTime['startDate'],
+                'end_date'=>$slotTime['endDate'],
+                'class_unique_id'=>$session_id
+            ];
+
+            $arrayTemp = (array)array_merge($request->class_schedule_info, $class_schedule_info);
+            
+            $teacher = parent::store($arrayTemp);
             parent::createModelObject("App\Models\ClassSchedule");
         }
         // Insert into user table
