@@ -30,7 +30,7 @@ class ClassScheduleController extends BaseController
         $session_id = Str::random($length = 10);
 
         foreach ($slotTimes as $key => $slotTime) {
-
+            parent::createModelObject("App\Models\ClassSchedule");
             $class_schedule_info = [
                 'start_date'=>$slotTime['startDate'],
                 'end_date'=>$slotTime['endDate'],
@@ -40,7 +40,6 @@ class ClassScheduleController extends BaseController
             $arrayTemp = (array)array_merge($request->class_schedule_info, $class_schedule_info);
 
             $class_schedule = parent::store($arrayTemp);
-            parent::createModelObject("App\Models\ClassSchedule");
 
             // insert into student_session table
             foreach ($students as $key => $student) {
