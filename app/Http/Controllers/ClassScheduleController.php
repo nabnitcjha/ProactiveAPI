@@ -39,13 +39,17 @@ class ClassScheduleController extends BaseController
 
             $arrayTemp = (array)array_merge($request->class_schedule_info, $class_schedule_info);
 
-            $teacher = parent::store($arrayTemp);
+            $class_schedule = parent::store($arrayTemp);
             parent::createModelObject("App\Models\ClassSchedule");
+
+            // insert into student_session table
+            foreach ($students as $key => $student) {
+                parent::createModelObject("App\Models\StudentSession");
+                $student_info["student_id"] = $student['id'];
+                $student_info["class_schedule_id"] = $class_schedule->id;
+                parent::store($student_info);
+            }
         }
-        // Insert into user table
-        // parent::createModelObject("App\Models\User");
-        // $user = parent::store($request->user_info);
-        // $this->successResponse($teacher, 'save successfully');
     }
 
     public function show($id)
