@@ -73,5 +73,6 @@ Route::group([
 
     Route::post('addTimetable', 'ClassScheduleController@saveData');
     Route::get('getTimetables/{allowPagination}', 'ClassScheduleController@index');
+    Route::get('timetable/{id}/drag', 'ClassScheduleController@dragUpdate');
 
 });

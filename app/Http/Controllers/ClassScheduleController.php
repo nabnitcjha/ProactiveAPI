@@ -56,7 +56,7 @@ class ClassScheduleController extends BaseController
         return parent::show($id);
     }
 
-    public function update(Request $request, $id)
+    public function dragUpdate(Request $request, $id)
     {
         return parent::update($request,$id);
     }
