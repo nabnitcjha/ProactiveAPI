@@ -34,6 +34,12 @@ Route::group([
 
     Route::post('addStudent', 'StudentController@saveData');
     Route::get('getStudents/{allowPagination}', 'StudentController@index');
+    // student-detail page route
+    Route::get('student/{id}/profileOverview', 'StudentController@profileOverview');
+    Route::get('student/{id}/teachers', 'StudentController@teachers');
+    Route::get('student/{id}/groupDiscussion', 'StudentController@groupDiscussion');
+    Route::get('student/{id}/Classes', 'StudentController@Classes');
+    Route::get('student/{id}/changePassword', 'StudentController@changePassword');
 
 });
 

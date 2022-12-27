@@ -42,10 +42,10 @@ class TeacherController extends BaseController
         return parent::show($id);
     }
 
-    public function update(Request $request, $id)
-    {
-        return parent::update($request,$id);
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     return parent::update($request,$id);
+    // }
 
     public function destroy($id)
     {
