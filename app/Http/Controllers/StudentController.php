@@ -74,4 +74,24 @@ class StudentController extends BaseController
     {
         return parent::destroy($id);
     }
+
+    public function profileOverview($id){
+
+    }
+
+    public function teachers($id){
+        
+    }
+
+    public function groupDiscussion($id){
+        
+    }
+
+    public function Classes($id){
+        
+    }
+
+    public function changePassword(Request $request,$id){
+        
+    }
 }

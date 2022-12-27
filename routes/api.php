@@ -39,7 +39,7 @@ Route::group([
     Route::get('student/{id}/teachers', 'StudentController@teachers');
     Route::get('student/{id}/groupDiscussion', 'StudentController@groupDiscussion');
     Route::get('student/{id}/Classes', 'StudentController@Classes');
-    Route::get('student/{id}/changePassword', 'StudentController@changePassword');
+    Route::put('student/{id}/changePassword', 'StudentController@changePassword');
 
 });
 
