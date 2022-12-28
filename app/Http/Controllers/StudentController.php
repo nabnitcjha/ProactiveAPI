@@ -76,7 +76,7 @@ class StudentController extends BaseController
     }
 
     public function profileOverview($id){
-
+        $id = 1;
     }
 
     public function teachers($id){
