@@ -76,7 +76,12 @@ class StudentController extends BaseController
     }
 
     public function profileOverview($id){
-        $id = 1;
+
+        $student = Student::with(['classSchedule'=>function($query){
+            $query->select('topic','zoom_link');
+        }])->where('id',$id)->get()->groupBy('classSchedule.class_unique_id');
+
+        return $this->successResponse($student, 'fetch record successfully');
     }
 
     public function teachers($id){
