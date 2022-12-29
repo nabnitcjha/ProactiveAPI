@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
+use App\Models\Subject;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class StudentController extends BaseController
@@ -27,12 +29,12 @@ class StudentController extends BaseController
 
         // Insert into student table
         parent::createModelObject("App\Models\Student");
-        $student_info_tmp=array();
+        $student_info_tmp = array();
         $student_uid = [
-            'user_id'=>$user->id
+            'user_id' => $user->id
         ];
         $student_info_tmp = (array)array_merge($request->student_info, $student_uid);
-        
+
         $student = parent::store($student_info_tmp);
 
         // Insert into parent table
@@ -75,28 +77,60 @@ class StudentController extends BaseController
         return parent::destroy($id);
     }
 
-    public function profileOverview($id){
+    public function profileOverview($id)
+    {
+        $preVal = '';
+        $curVal = '';
+        $newArr = array();
+        $index = 0;
 
-        $student = Student::with(['classSchedule'=>function($query){
-            $query->select('topic','zoom_link');
-        }])->where('id',$id)->get()->groupBy('classSchedule.class_unique_id');
+        $timetables = Student::with(['classSchedule.subject', 'classSchedule.teacher'])->where('id', $id)->get()->pluck('classSchedule');
 
-        return $this->successResponse($student, 'fetch record successfully');
+        foreach ($timetables[0] as $key => $value) {
+            $curVal = $value->topic;
+            if ($curVal != $preVal) {
+                $newArr[$index] = $value;
+                $index = $index + 1;
+            }
+            $preVal = $value->topic;
+        }
+        return $this->successResponse($newArr, 'fetch record successfully');
     }
 
-    public function teachers($id){
-        
+    public function teachers($id)
+    {
     }
 
-    public function groupDiscussion($id){
-        
+    public function groupDiscussion($id)
+    {
     }
 
-    public function Classes($id){
-        
+    public function Classes($id)
+    {
     }
 
-    public function changePassword(Request $request,$id){
-        
+    public function changePassword(Request $request, $id)
+    {
     }
 }
+
+
+// code for learning
+
+// $timetableIds = StudentSession::where('student_id',$id)->pluck('class_schedule_id');
+// $sub = ClassSchedule::orderBy('id','DESC');
+// $timetables = DB::table(DB::raw("({$sub->toSql()}) as sub"))
+// ->whereIn('id',$timetableIds)
+// ->groupBy('class_unique_id')
+// ->get();
+// $student = Student::where('id',$id)->first();
+
+// foreach ($timetables as $key => $value) {
+//     $subject = Subject::where('id',$value->subject_id)->first();
+//     $teacher = Teacher::where('id',$value->teacher_id)->first();
+//     $value->subject = $subject->name;
+//     $value->teacher = $teacher->full_name;
+
+// }
+
+// return $this->successResponse($timetables, 'fetch record successfully');
