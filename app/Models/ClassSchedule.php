@@ -9,4 +9,14 @@ class ClassSchedule extends Model
 {
     use HasFactory;
     protected $table = 'class_schedule';
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
 }
