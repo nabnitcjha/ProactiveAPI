@@ -13,4 +13,8 @@ class Student extends Model
     {
         return $this->belongsToMany(ClassSchedule::class, 'student_sessions','student_id' ,'class_schedule_id');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
