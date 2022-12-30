@@ -132,13 +132,10 @@ class StudentController extends BaseController
             "class_schedule"=>$clsArr
         ];
 
-        // return $this->successResponse(
-        //     $this->profileOverviewResource->make($newArr),
-        //     'fetch all record successfully'
-        // );
-
-        return $this->successResponse($newArr, 'fetch record successfully');
-
+        return $this->successResponse(
+            $this->profileOverviewResource->make($newArr),
+            'fetch all record successfully'
+        );
     }
 
     public function teachers($id)

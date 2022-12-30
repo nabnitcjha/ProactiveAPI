@@ -14,12 +14,13 @@ class profileOverview extends JsonResource
      */
     public function toArray($request)
     {
+        // dd($this['subject']);
         return [
-            "student_info" => $this->student,
-            "subject_info" => $this->subject,
-            "teacher_info" => $this->teacher,
-            "parent_info" => $this->guardian,
-            "class_schedule_info" => $this->class_schedule
+            "student_info" => $this['student'],
+            "subject_info" => $this['subject'],
+            "teacher_info" => $this['teacher'],
+            "parent_info" => $this['guardian'],
+            "class_schedule_info" => $this['class_schedule'],
         ];
     }
 }
