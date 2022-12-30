@@ -9,4 +9,8 @@ class Guardian extends Model
 {
     use HasFactory;
     protected $table = 'guardians';
+    
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

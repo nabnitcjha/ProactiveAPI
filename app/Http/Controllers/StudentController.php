@@ -84,16 +84,18 @@ class StudentController extends BaseController
         $newArr = array();
         $index = 0;
 
-        $timetables = Student::with(['classSchedule.subject', 'classSchedule.teacher','user'])->where('id', $id)->get();
+        $timetables = Student::with(['classSchedule.subject', 'classSchedule.teacher','user','guardian.user'])->where('id', $id)->get();
         $student = [
             'full_name'=>$timetables[0]->full_name,
             'emil'=>$timetables[0]->user->email,
             'phone'=>$timetables[0]->phone,
         ];
+       
         foreach ($timetables->pluck('classSchedule')[0] as $key => $value) {
             $curVal = $value->topic;
             if ($curVal != $preVal) {
                 $value->student = $student;
+                $value->guardian = $timetables[0]->guardian;
                 $newArr[$index] = $value;
                 $index = $index + 1;
             }
