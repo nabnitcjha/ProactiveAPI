@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\student\profileOverview;
 use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use App\Models\Subject;
@@ -14,6 +15,7 @@ class StudentController extends BaseController
     public function __construct()
     {
         $this->studentResource = new StudentResource(array());
+        $this->profileOverviewResource = new profileOverview(array());
         $this->Model = new Student();
     }
 
@@ -122,7 +124,12 @@ class StudentController extends BaseController
             $preVal = $value->topic;
         }
 
-        return $this->successResponse($newArr, 'fetch record successfully');
+        return $this->successResponse(
+            $this->profileOverviewResource->collection($newArr),
+            'fetch all record successfully'
+        );
+
+        // return $this->successResponse($newArr, 'fetch record successfully');
     }
 
     public function teachers($id)

@@ -15,12 +15,16 @@ class profileOverview extends JsonResource
     public function toArray($request)
     {
         return [
-            "full_name" => $this->id,
-            "subjects" => $this->first_name . ' ' .$this->last_name,
-            "parents" => $this->email,
-            "classes" => $this->getRoleNames(),
-            "email" => $this->getPermissionsViaRoles()->pluck('name'),
-            "phone" => (bool) $this->user_status
+            "student_info" => $this->student,
+            "subject_info" => $this->subject,
+            "teacher_info" => $this->teacher,
+            "parent_info" => $this->guardian,
+            "class_info" => [
+                "topic"=> $this->topic,
+                "start_date"=> $this->start_date,
+                "end_date"=> $this->end_date,
+                "description"=> $this->description
+            ]
         ];
     }
 }
