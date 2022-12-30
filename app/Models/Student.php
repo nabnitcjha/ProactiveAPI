@@ -20,6 +20,6 @@ class Student extends Model
 
     public function guardian()
     {
-        return $this->belongsToMany(Guardian::class, 'guardian_students','guardian_id' ,'student_id');
+        return $this->belongsToMany(Guardian::class, 'guardian_students','student_id','guardian_id' );
     }
 }
