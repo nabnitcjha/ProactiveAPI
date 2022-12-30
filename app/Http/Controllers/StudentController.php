@@ -84,30 +84,29 @@ class StudentController extends BaseController
         $curVal = '';
         $newArr = array();
         $index = 0;
-     
+
         $timetables = Student::query()
             ->with(['classSchedule.subject' => function ($query) {
                 $query->select('id', 'name');
             }])
             ->with(['classSchedule.teacher' => function ($query) {
-                $query->select('id', 'full_name','phone');
+                $query->select('id', 'full_name', 'phone');
             }])
-            // ->with(['classSchedule' => function ($query){
-            //     $query->select('id', 'teacher_id','subject_id','topic','pivot');
-            // }])
-            ->with(['guardian.user' => function ($query){
+            ->with(['classSchedule' => function ($query) {
+                $query->select('class_schedule_id','subject_id','teacher_id', 'topic', 'start_date', 'end_date', 'description');
+            }])
+            ->with(['guardian.user' => function ($query) {
                 $query->select('id', 'email');
             }])
-            ->with(['guardian' => function ($query){
-                $query->select('id', 'user_id','full_name','phone');
+            ->with(['guardian' => function ($query) {
+                $query->select('id', 'user_id', 'full_name', 'phone');
             }])
             ->where('id', $id)->get();
 
 
-        // $timetables = Student::with(['classSchedule.subject', 'classSchedule.teacher', 'user', 'guardian.user'])->where('id', $id)->get();
         $student = [
             'full_name' => $timetables[0]->full_name,
-            'emil' => $timetables[0]->user->email,
+            'email' => $timetables[0]->user->email,
             'phone' => $timetables[0]->phone,
         ];
 
