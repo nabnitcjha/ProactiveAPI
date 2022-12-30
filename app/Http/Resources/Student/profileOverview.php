@@ -19,12 +19,7 @@ class profileOverview extends JsonResource
             "subject_info" => $this->subject,
             "teacher_info" => $this->teacher,
             "parent_info" => $this->guardian,
-            "class_info" => [
-                "topic"=> $this->topic,
-                "start_date"=> $this->start_date,
-                "end_date"=> $this->end_date,
-                "description"=> $this->description
-            ]
+            "class_schedule_info" => $this->class_schedule
         ];
     }
 }

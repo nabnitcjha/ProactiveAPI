@@ -24,6 +24,16 @@ class Student extends Model
         return $this->belongsToMany(Guardian::class, 'guardian_students', 'student_id', 'guardian_id');
     }
 
+    public function subject()
+    {
+        return $this->belongsToMany(Subject::class, 'student_subjects', 'student_id', 'subject_id');
+    }
+
+    public function teacher()
+    {
+        return $this->belongsToMany(Teacher::class, 'student_teachers', 'student_id', 'teacher_id');
+    }
+
     // public function user()
     // {
     //     return $this->belongsTo('User')->select(['id', 'username']);

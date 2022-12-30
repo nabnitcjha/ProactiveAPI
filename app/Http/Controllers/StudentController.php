@@ -85,17 +85,21 @@ class StudentController extends BaseController
         $preVal = '';
         $curVal = '';
         $newArr = array();
+        $clsArr = array();
         $index = 0;
 
         $timetables = Student::query()
-            ->with(['classSchedule.subject' => function ($query) {
+            ->with(['subject' => function ($query) {
                 $query->select('id', 'name');
             }])
-            ->with(['classSchedule.teacher' => function ($query) {
-                $query->select('id', 'full_name', 'phone');
+            ->with(['teacher.user' => function ($query) {
+                $query->select('id', 'email');
+            }])
+            ->with(['teacher' => function ($query) {
+                $query->select('id', 'user_id', 'full_name', 'phone');
             }])
             ->with(['classSchedule' => function ($query) {
-                $query->select('class_schedule_id','subject_id','teacher_id', 'topic', 'start_date', 'end_date', 'description');
+                $query->select('class_schedule_id','topic', 'start_date', 'end_date', 'description');
             }])
             ->with(['guardian.user' => function ($query) {
                 $query->select('id', 'email');
@@ -104,32 +108,37 @@ class StudentController extends BaseController
                 $query->select('id', 'user_id', 'full_name', 'phone');
             }])
             ->where('id', $id)->get();
-
-
+            
         $student = [
             'full_name' => $timetables[0]->full_name,
             'email' => $timetables[0]->user->email,
             'phone' => $timetables[0]->phone,
         ];
-
-
+       
         foreach ($timetables->pluck('classSchedule')[0] as $key => $value) {
             $curVal = $value->topic;
             if ($curVal != $preVal) {
-                $value->student = $student;
-                $value->guardian = $timetables[0]->guardian;
-                $newArr[$index] = $value;
+                $clsArr[$index] = $value;
                 $index = $index + 1;
             }
             $preVal = $value->topic;
         }
 
-        return $this->successResponse(
-            $this->profileOverviewResource->collection($newArr),
-            'fetch all record successfully'
-        );
+        $newArr = [
+            "student"=>$student,
+            "subject"=>$timetables[0]->subject,
+            "teacher"=>$timetables[0]->teacher,
+            "guardian"=>$timetables[0]->guardian,
+            "class_schedule"=>$clsArr
+        ];
 
-        // return $this->successResponse($newArr, 'fetch record successfully');
+        // return $this->successResponse(
+        //     $this->profileOverviewResource->make($newArr),
+        //     'fetch all record successfully'
+        // );
+
+        return $this->successResponse($newArr, 'fetch record successfully');
+
     }
 
     public function teachers($id)
