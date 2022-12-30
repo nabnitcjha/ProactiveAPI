@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends BaseController
 {
@@ -83,14 +84,34 @@ class StudentController extends BaseController
         $curVal = '';
         $newArr = array();
         $index = 0;
+     
+        $timetables = Student::query()
+            ->with(['classSchedule.subject' => function ($query) {
+                $query->select('id', 'name');
+            }])
+            ->with(['classSchedule.teacher' => function ($query) {
+                $query->select('id', 'full_name','phone');
+            }])
+            // ->with(['classSchedule' => function ($query){
+            //     $query->select('id', 'teacher_id','subject_id','topic','pivot');
+            // }])
+            ->with(['guardian.user' => function ($query){
+                $query->select('id', 'email');
+            }])
+            ->with(['guardian' => function ($query){
+                $query->select('id', 'user_id','full_name','phone');
+            }])
+            ->where('id', $id)->get();
 
-        $timetables = Student::with(['classSchedule.subject', 'classSchedule.teacher','user','guardian.user'])->where('id', $id)->get();
+
+        // $timetables = Student::with(['classSchedule.subject', 'classSchedule.teacher', 'user', 'guardian.user'])->where('id', $id)->get();
         $student = [
-            'full_name'=>$timetables[0]->full_name,
-            'emil'=>$timetables[0]->user->email,
-            'phone'=>$timetables[0]->phone,
+            'full_name' => $timetables[0]->full_name,
+            'emil' => $timetables[0]->user->email,
+            'phone' => $timetables[0]->phone,
         ];
-       
+
+
         foreach ($timetables->pluck('classSchedule')[0] as $key => $value) {
             $curVal = $value->topic;
             if ($curVal != $preVal) {
@@ -101,7 +122,7 @@ class StudentController extends BaseController
             }
             $preVal = $value->topic;
         }
-        
+
         return $this->successResponse($newArr, 'fetch record successfully');
     }
 

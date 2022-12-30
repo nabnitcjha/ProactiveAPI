@@ -11,15 +11,21 @@ class Student extends Model
 
     public function classSchedule()
     {
-        return $this->belongsToMany(ClassSchedule::class, 'student_sessions','student_id' ,'class_schedule_id');
+        return $this->belongsToMany(ClassSchedule::class, 'student_sessions', 'student_id', 'class_schedule_id');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
     public function guardian()
     {
-        return $this->belongsToMany(Guardian::class, 'guardian_students','student_id','guardian_id' );
+        return $this->belongsToMany(Guardian::class, 'guardian_students', 'student_id', 'guardian_id');
     }
+
+    // public function user()
+    // {
+    //     return $this->belongsTo('User')->select(['id', 'username']);
+    // }
 }
