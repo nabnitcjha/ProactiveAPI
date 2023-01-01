@@ -102,7 +102,7 @@ class StudentController extends BaseController
                 $query->select('id', 'user_id', 'full_name', 'phone');
             }])
             ->with(['classSchedule' => function ($query) {
-                $query->select('class_schedule_id','topic', 'start_date', 'end_date', 'description');
+                $query->select('class_schedule_id','topic', 'start_date', 'end_date', 'description','duration','selected_day');
             }])
             ->with(['guardian.user' => function ($query) {
                 $query->select('id', 'email');
