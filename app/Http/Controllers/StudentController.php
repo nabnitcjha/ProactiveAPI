@@ -95,6 +95,9 @@ class StudentController extends BaseController
             ->with(['teacher.user' => function ($query) {
                 $query->select('id', 'email');
             }])
+            ->with(['teacher.subject' => function ($query) {
+                $query->select('id', 'name');
+            }])
             ->with(['teacher' => function ($query) {
                 $query->select('id', 'user_id', 'full_name', 'phone');
             }])
