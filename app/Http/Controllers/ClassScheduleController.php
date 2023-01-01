@@ -39,6 +39,7 @@ class ClassScheduleController extends BaseController
             $class_schedule_info = [
                 'start_date' => $slotTime['startDate'],
                 'end_date' => $slotTime['endDate'],
+                'duration' => $slotTime['duration'],
                 'class_unique_id' => $session_id
             ];
 

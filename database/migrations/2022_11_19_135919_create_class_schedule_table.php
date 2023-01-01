@@ -20,6 +20,7 @@ class CreateClassScheduleTable extends Migration
             $table->integer('subject_id')->unsigned();
             $table->datetime('start_date');
             $table->datetime('end_date');
+            $table->text('duration')->nullable();
             $table->longText('zoom_link')->nullable();
             $table->integer('class_repeat')->default('0');
             $table->integer('class_complete')->default('0');
