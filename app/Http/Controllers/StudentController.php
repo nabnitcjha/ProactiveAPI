@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 class StudentController extends BaseController
 {
+    private $studentResource;
+    private $profileOverviewResource;
+    private $Model;
     public function __construct()
     {
         $this->studentResource = new StudentResource(array());
