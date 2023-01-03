@@ -15,15 +15,34 @@ use StudentSubject;
 
 class ClassScheduleController extends BaseController
 {
+    private $classScheduleResource;
+    private $imageOrFile;
+    public $Model;
+
     public function __construct()
     {
         $this->classScheduleResource = new ClassScheduleResource(array());
         $this->Model = new ClassSchedule();
+        $this->imageOrFile = new uploadImageOrFileController();
     }
 
     public function index($allowPagination)
     {
         return parent::index($allowPagination);
+    }
+
+    public function saveResourceFile(Request $request)
+    {
+        if ($assessment = $request->file('assessment_file')) {
+            $groupId = 0;
+            $uploadGroupId = $this->imageOrFile->manageUploads($assessment, $savepath = 'classSchedule', $groupId);
+            $class_schedule_info = [
+                'assignment' => $uploadGroupId
+            ];
+            parent::createModelObject("App\Models\Assignment");
+            $class_schedule = parent::store($class_schedule_info);
+
+        }
     }
 
     public function saveData(Request $request)
@@ -47,13 +66,13 @@ class ClassScheduleController extends BaseController
 
             $class_schedule = parent::store($arrayTemp);
 
-             // insert into teacher_subject table
-             $teacher_subject = TeacherSubject::where([
+            // insert into teacher_subject table
+            $teacher_subject = TeacherSubject::where([
                 'teacher_id' => $class_schedule->teacher_id,
                 'subject_id' => $class_schedule->subject_id
             ])->get();
 
-            if (count($teacher_subject)==0) {
+            if (count($teacher_subject) == 0) {
                 parent::createModelObject("App\Models\TeacherSubject");
                 $teacher_subject_info["teacher_id"] = $class_schedule->teacher_id;
                 $teacher_subject_info["subject_id"] = $class_schedule->subject_id;
@@ -72,7 +91,7 @@ class ClassScheduleController extends BaseController
                     'student_id' => $student['id'],
                     'subject_id' => $class_schedule->subject_id
                 ])->get();
-                if (count($student_subject)==0) {
+                if (count($student_subject) == 0) {
                     parent::createModelObject("App\Models\StudentSubject");
                     $student_subject_info["student_id"] = $student['id'];
                     $student_subject_info["subject_id"] = $class_schedule->subject_id;
@@ -84,7 +103,7 @@ class ClassScheduleController extends BaseController
                     'student_id' => $student['id'],
                     'teacher_id' => $class_schedule->teacher_id
                 ])->get();
-                if (count($student_teacher)==0) {
+                if (count($student_teacher) == 0) {
                     parent::createModelObject("App\Models\StudentTeacher");
                     $student_teacher_info["student_id"] = $student['id'];
                     $student_teacher_info["teacher_id"] = $class_schedule->teacher_id;

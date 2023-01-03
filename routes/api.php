@@ -80,5 +80,5 @@ Route::group([
     Route::post('addTimetable', 'ClassScheduleController@saveData');
     Route::get('getTimetables/{allowPagination}', 'ClassScheduleController@index');
     Route::post('timetable/{id}/drag', 'ClassScheduleController@dragUpdate');
-
+    Route::post('timetable/{id}/resourceFile', 'ClassScheduleController@saveResourceFile');
 });
