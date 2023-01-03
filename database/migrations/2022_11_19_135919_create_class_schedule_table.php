@@ -26,11 +26,15 @@ class CreateClassScheduleTable extends Migration
             $table->integer('class_complete')->default('0');
             $table->text('selected_day')->nullable();
             $table->string('class_unique_id');
+            $table->integer('study_resource_id')->unsigned();
+            $table->integer('assignment_id')->unsigned();
             $table->string('description');
             $table->timestamps();
 
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreign('study_resource_id')->references('id')->on('study_resources')->onDelete('cascade');
+            $table->foreign('assignment_id')->references('id')->on('assignments')->onDelete('cascade');
         });
     }
 
