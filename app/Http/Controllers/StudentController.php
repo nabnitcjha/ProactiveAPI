@@ -14,7 +14,8 @@ class StudentController extends BaseController
 {
     private $studentResource;
     private $profileOverviewResource;
-    private $Model;
+    public $Model;
+    
     public function __construct()
     {
         $this->studentResource = new StudentResource(array());

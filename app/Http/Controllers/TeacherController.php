@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class TeacherController extends BaseController
 {
+    public $Model;
+    private $teacherResource;
+    
     public function __construct()
     {
         $this->teacherResource = new TeacherResource(array());

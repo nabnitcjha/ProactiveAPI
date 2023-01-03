@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 
 class SubjectController extends BaseController
 {
+    public $Model;
+    private $subjectResource;
+
     public function __construct()
     {
-        $this->resource_name = new SubjectResource(array());
+        $this->subjectResource = new SubjectResource(array());
         $this->Model = new Subject();
     }
 
