@@ -26,8 +26,8 @@ class CreateClassScheduleTable extends Migration
             $table->integer('class_complete')->default('0');
             $table->text('selected_day')->nullable();
             $table->string('class_unique_id');
-            $table->integer('study_resource_id')->unsigned();
-            $table->integer('assignment_id')->unsigned();
+            $table->integer('study_resource_id')->unsigned()->nullable();
+            $table->integer('assignment_id')->unsigned()->nullable();
             $table->string('description');
             $table->timestamps();
 
