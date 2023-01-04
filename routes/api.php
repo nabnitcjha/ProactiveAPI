@@ -82,3 +82,17 @@ Route::group([
     Route::post('timetable/{id}/drag', 'ClassScheduleController@dragUpdate');
     Route::post('timetable/{id}/resourceFile', 'ClassScheduleController@saveResourceFile');
 });
+
+// chat routes
+// class-schedule routes
+Route::group([
+
+    'middleware' => 'api',
+    'namespace' => 'App\Http\Controllers'
+
+], function ($router) {
+    Route::get('chat', [App\Http\Controllers\ChatsController::class, 'index']);
+    Route::get('messages', [App\Http\Controllers\ChatsController::class, 'fetchMessages']);
+    Route::post('messages', [App\Http\Controllers\ChatsController::class, 'sendMessage']);
+});
+
